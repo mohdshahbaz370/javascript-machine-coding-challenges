@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>infinite-scroll</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="todoContainer">
+      <h1>Todo List</h1>
+      <form id="todoForm">
+        <input id="textField" type="text" placeholder="...add items" />
+      </form>
+      <ul id="listContainer"></ul>
+      <div id="noElements">Your list is empty</div>
+    </div>
+    <template id="todoTemplate">
+      <li class="todo-list">
+        <span class="text"></span>
+        <button class="edit">✏️</button>
+        <button class="delete">🗑️</button>
+      </li>
+    </template>
+    <script src="index.js"></script>
+  </body>
+</html>

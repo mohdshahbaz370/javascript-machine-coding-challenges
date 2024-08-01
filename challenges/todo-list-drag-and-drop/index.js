@@ -4,6 +4,19 @@ const listContainer = document.getElementById("listContainer");
 const todoForm = document.getElementById("todoForm");
 const todoTemplate = document.getElementById("todoTemplate");
 
+const enableDraggingElements = () => {
+  const items = document.querySelectorAll(".draggable");
+
+  items.forEach((item) => {
+    item.addEventListener("dragstart", () => {
+      item.classList.add("dragging");
+    });
+    item.addEventListener("dragend", () => {
+      item.classList.remove("dragging");
+    });
+  });
+};
+
 todoForm.addEventListener("submit", (e) => {
   e.preventDefault();
   if (textField.value) {
@@ -41,6 +54,7 @@ const addItems = (item) => {
   li.querySelector(".text").textContent = item;
   listContainer.appendChild(li);
   textField.value = "";
+  enableDraggingElements();
 };
 
 initialList.forEach(addItems);
@@ -54,17 +68,6 @@ const handlleNoElements = () => {
 };
 
 handlleNoElements();
-
-const items = document.querySelectorAll(".draggable");
-
-items.forEach((item) => {
-  item.addEventListener("dragstart", () => {
-    item.classList.add("dragging");
-  });
-  item.addEventListener("dragend", () => {
-    item.classList.remove("dragging");
-  });
-});
 
 listContainer.addEventListener("dragover", (e) => {
   e.preventDefault();

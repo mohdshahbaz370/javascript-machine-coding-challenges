@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>infinite-scroll</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <h1>Kanban Board</h1>
+      <form id="todoForm">
+        <input id="textField" type="text" placeholder="...add items" />
+      </form>
+      <div id="kanboardList">
+        <ul class="container" id="1">
+          <li class="status">Todo</li>
+        </ul>
+        <ul class="container" id="2">
+          <li class="status">inProgress</li>
+        </ul>
+        <ul class="container" id="3">
+          <li class="status">Closed</li>
+        </ul>
+      </div>
+    </div>
+    <template id="noItemTemplate">
+      <div class="noItem">No items</div>
+    </template>
+    <template id="todoTemplate">
+      <li class="draggable" draggable="true">
+        <span class="text"></span>
+        <button class="edit">✏️</button>
+        <button class="delete">🗑️</button>
+      </li>
+    </template>
+    <script src="script.js"></script>
+  </body>
+</html>

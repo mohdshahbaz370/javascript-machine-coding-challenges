@@ -1,0 +1,53 @@
+#app {
+  margin: 0px auto;
+  width: 50%;
+  text-align: center;
+}
+
+#kanboardList {
+  display: flex;
+  justify-content: space-between;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  border: 1px solid black;
+  width: 25%;
+  border-radius: 5px;
+  padding: 0px;
+}
+
+.edit {
+  background-color: gold;
+  padding: 5px;
+}
+
+.delete {
+  background-color: red;
+  padding: 5px;
+  margin-left: 5px;
+}
+
+.edit,
+.delete:hover {
+  cursor: pointer;
+}
+
+#textField {
+  padding: 5px;
+  width: 50%;
+  margin-bottom: 50px;
+}
+
+.draggable {
+  border: 1px solid black;
+  padding: 5px;
+  margin: 5px;
+}
+
+.status {
+  padding: 5px;
+  border-bottom: 1px solid black;
+}

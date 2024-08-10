@@ -20,8 +20,8 @@ listContainer.addEventListener("click", (e) => {
     const edit = e.target;
     const text = edit.parentElement.querySelector(".text");
     const input = document.createElement("input");
-    edit.parentElement.replaceChild(input, text);
     input.value = text.textContent;
+    edit.parentElement.replaceChild(input, text);
     edit.className = "save";
     edit.textContent = "💾";
   } else if (e.target.classList.contains("save")) {
@@ -29,8 +29,8 @@ listContainer.addEventListener("click", (e) => {
     const input = save.parentElement.querySelector("input");
     const text = document.createElement("span");
     text.className = "text";
-    save.parentElement.replaceChild(text, input);
     text.textContent = input.value;
+    save.parentElement.replaceChild(text, input);
     save.className = "edit";
     save.textContent = "✏️";
   }

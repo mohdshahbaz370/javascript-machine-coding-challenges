@@ -4,17 +4,29 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>infinite-scroll</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div id="todoContainer">
-      <h1>Todo List</h1>
+    <div id="app">
+      <h1>Todo List Drag and Drop</h1>
       <form id="todoForm">
         <input id="textField" type="text" placeholder="...add items" />
       </form>
-      <ul id="listContainer"></ul>
-      <div id="noElements">Your list is empty</div>
+      <div id="kanboardList">
+        <ul class="container">
+          <li class="status">Todo</li>
+        </ul>
+        <ul class="container">
+          <li class="status">inProgress</li>
+        </ul>
+        <ul class="container">
+          <li class="status">Closed</li>
+        </ul>
+      </div>
     </div>
+    <template id="noItemTemplate">
+      <div class="noItem">No items</div>
+    </template>
     <template id="todoTemplate">
       <li class="draggable" draggable="true">
         <span class="text"></span>
@@ -22,6 +34,6 @@
         <button class="delete">🗑️</button>
       </li>
     </template>
-    <script src="index.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>

@@ -7,12 +7,12 @@ const noItemTemplate = document.getElementById("noItemTemplate");
 
 const handlenoElements = () => {
   containers.forEach((container) => {
-    if (container.children.length === 3) {
-      const noItem = container.querySelector(".noItem");
-      if (noItem) noItem.remove();
-    } else if (container.children.length === 1) {
-      const noItem = noItemTemplate.content.cloneNode(true);
-      container.appendChild(noItem);
+    const noItem = container.querySelector(".noItem");
+    const hasDragableItem = container.querySelector(".draggable");
+    if (hasDragableItem && noItem) {
+      noItem.remove();
+    } else if (!hasDragableItem && !noItem) {
+      container.appendChild(noItemTemplate.content.cloneNode(true));
     }
   });
 };
@@ -20,20 +20,20 @@ const handlenoElements = () => {
 todoForm.addEventListener("submit", (e) => {
   e.preventDefault();
   if (textField.value) {
-    addItems(textField.value);
+    addItem(textField.value);
   }
 });
 
-const addItems = (item) => {
-  const li = todoTemplate.content.cloneNode(true);
-  li.querySelector(".text").textContent = item;
-  containers[0].appendChild(li);
+const addItem = (item) => {
+  const newItem = todoTemplate.content.cloneNode(true);
+  newItem.querySelector(".text").textContent = item;
+  containers[0].appendChild(newItem);
   textField.value = "";
-  enableDraggingElements();
+  enableDraggingItems();
   handlenoElements();
 };
 
-const enableDraggingElements = () => {
+const enableDraggingItems = () => {
   const draggables = document.querySelectorAll(".draggable");
   draggables.forEach((dragabble) => {
     dragabble.addEventListener("dragstart", () => {
@@ -46,29 +46,30 @@ const enableDraggingElements = () => {
   });
 };
 
-initialList.forEach(addItems);
+initialList.forEach(addItem);
 
 containers.forEach((container) => {
   handlenoElements();
   container.addEventListener("click", (e) => {
-    if (e.target.classList.contains("delete")) {
-      e.target.parentElement.remove();
+    const target = e.target;
+    if (target.classList.contains("delete")) {
+      target.parentElement.remove();
       handlenoElements();
-    } else if (e.target.classList.contains("edit")) {
-      const edit = e.target;
+    } else if (target.classList.contains("edit")) {
+      const edit = target;
       const text = edit.parentElement.querySelector(".text");
       const input = document.createElement("input");
-      edit.parentElement.replaceChild(input, text);
       input.value = text.textContent;
+      edit.parentElement.replaceChild(input, text);
       edit.className = "save";
       edit.textContent = "💾";
-    } else if (e.target.classList.contains("save")) {
-      const save = e.target;
+    } else if (target.classList.contains("save")) {
+      const save = target;
       const input = save.parentElement.querySelector("input");
       const text = document.createElement("span");
       text.className = "text";
-      save.parentElement.replaceChild(text, input);
       text.textContent = input.value;
+      save.parentElement.replaceChild(text, input);
       save.className = "edit";
       save.textContent = "✏️";
     }
@@ -82,7 +83,7 @@ containers.forEach((container) => {
     } else {
       container.insertBefore(draggedElement, aferElement);
     }
-    enableDraggingElements();
+    enableDraggingItems();
   });
 });
 

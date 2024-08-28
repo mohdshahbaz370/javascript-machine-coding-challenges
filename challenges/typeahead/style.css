@@ -1,0 +1,26 @@
+.item {
+  background-color: royalblue;
+}
+
+li {
+  border: 1px solid black;
+}
+
+#suggestions {
+  list-style-type: none;
+  cursor: pointer;
+  margin: 0px;
+  padding: 0px;
+  width: 50%;
+  margin: 0px auto;
+}
+
+#searchBar {
+  width: 50%;
+}
+
+#container {
+  text-align: center;
+  width: 50%;
+  margin: 0px auto;
+}

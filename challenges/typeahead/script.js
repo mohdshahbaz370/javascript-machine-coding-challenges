@@ -47,10 +47,10 @@ const getData = async (text) => {
       `https://potterapi-fedeperin.vercel.app/es/characters?search=${text}`
     );
     res = await res.json();
-    if (res?.length && text) {
-      res.slice(0, 6).forEach(displayItems);
-    } else {
+    if (res?.length === 0) {
       showInfo("no data found");
+    } else if (inputValue) {
+      res.slice(0, 6).forEach(displayItems);
     }
   } catch (error) {
     console.error(error);

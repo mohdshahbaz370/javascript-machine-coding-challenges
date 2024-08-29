@@ -69,19 +69,19 @@ const debounce = (func, ms) => {
 
 const getDebouncedData = debounce(getData, 300);
 
-// searchBar.addEventListener("input", (e) => {
-//   inputValue = e.target.value;
-//   resetSuggestions();
-//   showInfo("");
-//   if (inputValue === "") {
-//     showLoader(false);
-//   } else {
-//     showLoader();
-//     getDebouncedData(inputValue);
-//   }
-// });
+searchBar.addEventListener("input", (e) => {
+  inputValue = e.target.value;
+  resetSuggestions();
+  showInfo("");
+  if (inputValue === "") {
+    showLoader(false);
+  } else {
+    showLoader();
+    getDebouncedData(inputValue);
+  }
+});
 
-searchBar.addEventListener("keyup", (e) => {
+searchBar.addEventListener("keydown", (e) => {
   if (e.key === "Enter" && suggestionFocus !== null) {
     inputValue = suggestions.children[suggestionFocus].textContent;
     resetSuggestions();
@@ -101,16 +101,6 @@ searchBar.addEventListener("keyup", (e) => {
       return;
     }
     highlightSuggestion(++suggestionFocus);
-  } else {
-    inputValue = e.target.value;
-    resetSuggestions();
-    showInfo("");
-    if (inputValue === "") {
-      showLoader(false);
-    } else {
-      showLoader();
-      getDebouncedData(inputValue);
-    }
   }
 });
 

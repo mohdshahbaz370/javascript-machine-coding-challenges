@@ -20,7 +20,7 @@ const highlightSuggestion = (index) => {
 const removeHighlightSuggestion = () => {
   suggestions.querySelector(".item")?.classList.remove("item");
   inputField.value = inputValue;
-  resetSuggestions(suggestions);
+  suggestionFocus = null;
 };
 
 const showInfo = (message = "API error occured") => {
@@ -69,17 +69,17 @@ const debounce = (func, ms) => {
 
 const getDebouncedData = debounce(getData, 300);
 
-searchBar.addEventListener("input", (e) => {
-  inputValue = e.target.value;
-  resetSuggestions();
-  showInfo("");
-  if (inputValue === "") {
-    showLoader(false);
-  } else {
-    showLoader();
-    getDebouncedData(inputValue);
-  }
-});
+// searchBar.addEventListener("input", (e) => {
+//   inputValue = e.target.value;
+//   resetSuggestions();
+//   showInfo("");
+//   if (inputValue === "") {
+//     showLoader(false);
+//   } else {
+//     showLoader();
+//     getDebouncedData(inputValue);
+//   }
+// });
 
 searchBar.addEventListener("keyup", (e) => {
   if (e.key === "Enter" && suggestionFocus !== null) {
@@ -87,7 +87,7 @@ searchBar.addEventListener("keyup", (e) => {
     resetSuggestions();
     return;
   } else if (e.key === "ArrowUp") {
-    e.preventDefault();
+    e.preventDefault(); // prevents cursor moving to start of input field
     suggestionFocus = suggestionFocus ?? suggestions.children.length;
     if (suggestionFocus - 1 < 0) {
       removeHighlightSuggestion();
@@ -101,17 +101,27 @@ searchBar.addEventListener("keyup", (e) => {
       return;
     }
     highlightSuggestion(++suggestionFocus);
+  } else {
+    inputValue = e.target.value;
+    resetSuggestions();
+    showInfo("");
+    if (inputValue === "") {
+      showLoader(false);
+    } else {
+      showLoader();
+      getDebouncedData(inputValue);
+    }
   }
 });
+
+// inputField.addEventListener("blur", () => {
+//   setTimeout(resetSuggestions, 100);
+// });
 
 suggestions.addEventListener("click", (e) => {
   const element = e.target;
   if (element.tagName.toLowerCase() === "li") {
-    inputValue = list.textContent;
+    inputValue = element.textContent;
     resetSuggestions();
   }
-});
-
-inputField.addEventListener("blur", () => {
-  setTimeout(resetSuggestions, 100);
 });

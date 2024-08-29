@@ -1,35 +1,44 @@
-const searchBar = document.getElementById("searchBar");
-const ul = document.getElementById("suggestions");
-const lists = ul.children;
-let position = null;
-let state = "";
+const inputField = document.getElementById("searchBar");
+const suggestions = document.getElementById("suggestions");
+const loader = document.getElementById("loader");
+const info = document.getElementById("info");
+let suggestionFocus = null;
+let inputValue = "";
+
+const resetSuggestions = () => {
+  suggestions.innerHTML = "";
+  suggestionFocus = null;
+  inputField.value = inputValue;
+};
+
+const highlightSuggestion = (index) => {
+  suggestions.querySelector(".item")?.classList.remove("item");
+  suggestions.children[index].classList.add("item");
+  inputField.value = suggestions.children[index].textContent;
+};
+
+const removeHighlightSuggestion = () => {
+  suggestions.querySelector(".item")?.classList.remove("item");
+  inputField.value = inputValue;
+  resetSuggestions(suggestions);
+};
+
+const showInfo = (message = "API error occured") => {
+  info.textContent = message;
+};
+
+const showLoader = (loading = true) => {
+  if (loading) {
+    loader.textContent = "Loading...";
+  } else {
+    loader.textContent = "";
+  }
+};
 
 const displayItems = (item) => {
   const li = document.createElement("li");
-  li.innerText = item.fullName;
-  li.addEventListener("mouseover", (e) => {
-    if (state === "arrowDown") {
-      lists[position - 1].className = "";
-    } else if (state === "arrowUp") {
-      lists[position + 1].className = "";
-    }
-    li.className = "item";
-    searchBar.value = li.innerText;
-    for (let i = 0; i < lists.length; i++) {
-      if (lists[i].className === "item") {
-        position = i;
-        state = "mouseOver";
-      }
-    }
-  });
-  li.addEventListener("mouseleave", (e) => {
-    li.className = "";
-  });
-  ul.appendChild(li);
-};
-
-const deleteItems = () => {
-  ul.innerHTML = "";
+  li.textContent = item?.fullName;
+  suggestions.appendChild(li);
 };
 
 const getData = async (text) => {
@@ -38,11 +47,16 @@ const getData = async (text) => {
       `https://potterapi-fedeperin.vercel.app/es/characters?search=${text}`
     );
     res = await res.json();
-    deleteItems();
-    res.slice(0, 6).forEach(displayItems);
+    if (res?.length && text) {
+      res.slice(0, 6).forEach(displayItems);
+    } else {
+      showInfo("no data found");
+    }
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    showInfo();
   }
+  showLoader(false);
 };
 
 const debounce = (func, ms) => {
@@ -53,57 +67,51 @@ const debounce = (func, ms) => {
   };
 };
 
-const suggestions = debounce(getData, 300);
+const getDebouncedData = debounce(getData, 300);
+
+searchBar.addEventListener("input", (e) => {
+  inputValue = e.target.value;
+  resetSuggestions();
+  showInfo("");
+  if (inputValue === "") {
+    showLoader(false);
+  } else {
+    showLoader();
+    getDebouncedData(inputValue);
+  }
+});
 
 searchBar.addEventListener("keyup", (e) => {
-  if (e.key === "Enter") {
-    deleteItems();
-    position = null;
+  if (e.key === "Enter" && suggestionFocus !== null) {
+    inputValue = suggestions.children[suggestionFocus].textContent;
+    resetSuggestions();
+    return;
   } else if (e.key === "ArrowUp") {
-    if (state === "arrowDown") {
-      position = position - 2;
-      state = "arrowUp";
-    } else if (state === "mouseOver") {
-      position = position - 1;
-      state = "arrowUp";
-    } else {
-      state = "arrowUp";
+    e.preventDefault();
+    suggestionFocus = suggestionFocus ?? suggestions.children.length;
+    if (suggestionFocus - 1 < 0) {
+      removeHighlightSuggestion();
+      return;
     }
-    if (position === null || position < 0) {
-      position = lists.length - 1;
-    }
-    for (let i = 0; i < lists.length; i++) {
-      if (position === i) {
-        lists[i].className = "item";
-        position = position - 1;
-        searchBar.value = lists[i].textContent;
-      } else {
-        lists[i].className = "";
-      }
-    }
+    highlightSuggestion(--suggestionFocus);
   } else if (e.key === "ArrowDown") {
-    if (state === "arrowUp") {
-      position = position + 2;
-      state = "arrowDown";
-    } else if (state === "mouseOver") {
-      position = position + 1;
-      state = "arrowDown";
-    } else {
-      state = "arrowDown";
+    suggestionFocus = suggestionFocus ?? -1;
+    if (suggestionFocus + 1 >= suggestions.children.length) {
+      removeHighlightSuggestion();
+      return;
     }
-    if (position === null || position === lists.length) {
-      position = 0;
-    }
-    for (let i = lists.length - 1; i >= 0; i--) {
-      if (position === i) {
-        lists[i].className = "item";
-        position = position + 1;
-        searchBar.value = lists[i].textContent;
-      } else {
-        lists[i].className = "";
-      }
-    }
-  } else {
-    suggestions(e.target.value);
+    highlightSuggestion(++suggestionFocus);
   }
+});
+
+suggestions.addEventListener("click", (e) => {
+  const element = e.target;
+  if (element.tagName.toLowerCase() === "li") {
+    inputValue = list.textContent;
+    resetSuggestions();
+  }
+});
+
+inputField.addEventListener("blur", () => {
+  setTimeout(resetSuggestions, 100);
 });

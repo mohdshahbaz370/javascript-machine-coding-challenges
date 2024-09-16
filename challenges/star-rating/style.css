@@ -1,0 +1,29 @@
+#container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#starContainer {
+  font-size: 6rem;
+}
+
+.star {
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+  font-size: inherit;
+}
+
+.star-empty::before {
+  content: "☆";
+}
+.star-filled::before {
+  color: gold;
+  cursor: pointer;
+  content: "★";
+}
+
+#smileyContainer {
+  font-size: 6rem;
+}

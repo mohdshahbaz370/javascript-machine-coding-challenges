@@ -1,0 +1,74 @@
+#container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.toast-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: fixed;
+}
+
+.warning {
+  background-color: yellow;
+}
+
+.danger {
+  background-color: red;
+}
+
+.info {
+  background-color: blue;
+}
+
+.success {
+  background-color: green;
+}
+
+.success::before {
+  content: "✓";
+}
+
+.danger::before {
+  content: "✗";
+}
+
+.warning::before {
+  content: "⚠";
+}
+
+.info::before {
+  content: "ⓘ";
+}
+
+.left-top {
+  left: 0px;
+  top: 0px;
+}
+
+.left-bottom {
+  left: 0px;
+  bottom: 0px;
+}
+.right-top {
+  right: 0px;
+  top: 0px;
+}
+.right-bottom {
+  right: 0px;
+  bottom: 0px;
+}
+
+.toast {
+  padding: 0.5em;
+  /* background-color: pink; */
+  border-radius: 0.25rem;
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.25);
+}
+
+.center {
+  text-align: center;
+}

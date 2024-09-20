@@ -1,0 +1,21 @@
+#container {
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.accordion {
+  padding: 20px;
+  width: 100%;
+  cursor: pointer;
+  border: none;
+}
+
+.active,
+.accordion:hover {
+  background-color: gray;
+}
+
+.panel {
+  display: none;
+  padding: 20px;
+}

@@ -5,6 +5,7 @@ for (let i = 0; i < accordion.length; i++) {
     // for (let j = 0; j < accordion.length; j++) {
     //   accordion[j].nextElementSibling.style.display = "none";
     // }
+    // End
 
     // Toggle the clicked panel
     this.classList.toggle("active");

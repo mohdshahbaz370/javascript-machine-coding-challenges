@@ -14,6 +14,11 @@ function loadMoreItems() {
   // simulate API delay
   setTimeout(() => {
     for (let i = 0; i < ItemsPerPage; i++) {
+      // maximum number of items to load
+      //   if (currentNoofitems === 10) {
+      //     break;
+      //   }
+      // End
       const p = document.createElement("p");
       p.textContent = `item ${currentNoofitems + 1}`;
       content.appendChild(p);

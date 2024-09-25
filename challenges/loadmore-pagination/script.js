@@ -3,7 +3,7 @@ const button = document.getElementById("button");
 const loader = document.getElementById("loader");
 const totalItems = 10;
 const ItemsPerPage = 3;
-let currentNoofitems = 3;
+let currentItemCount = 3;
 
 button.addEventListener("click", loadMoreItems);
 
@@ -15,17 +15,17 @@ function loadMoreItems() {
   setTimeout(() => {
     for (let i = 0; i < ItemsPerPage; i++) {
       // maximum number of items to load
-      //   if (currentNoofitems === 10) {
+      //   if (currentItemCount === 10) {
       //     break;
       //   }
       // End
       const p = document.createElement("p");
-      p.textContent = `item ${currentNoofitems + 1}`;
+      p.textContent = `item ${currentItemCount + 1}`;
       content.appendChild(p);
-      currentNoofitems++;
+      currentItemCount++;
     }
     loader.style.display = "none";
-    if (currentNoofitems >= totalItems) {
+    if (currentItemCount >= totalItems) {
       button.style.display = "none";
     } else {
       button.style.display = "block";

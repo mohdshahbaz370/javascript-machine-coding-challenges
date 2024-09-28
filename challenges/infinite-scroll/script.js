@@ -48,6 +48,8 @@ const fetchData = (numImages = 10) => {
     i++;
   }
 };
+// End
+
 fetchData();
 
 // educative.io website method

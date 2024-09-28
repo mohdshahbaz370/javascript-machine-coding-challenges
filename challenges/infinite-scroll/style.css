@@ -1,0 +1,30 @@
+/* educative.io website method */
+#container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* geeksforgeeks website method */
+/* #container {
+  display: flex;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+  width: 500px;
+  height: 300px;
+  border: 2px solid black;
+} */
+
+img {
+  margin: 5px;
+  width: 400px;
+  height: 400px;
+}
+
+#loader {
+  display: none;
+  font-size: 24px;
+}
+
+.center {
+  text-align: center;
+}
